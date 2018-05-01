@@ -1,0 +1,21 @@
+#Location {
+  width: 40%;
+  min-width: 350px;
+  border-radius: 3px;
+  padding: 5px; }
+  #Location .submitBtn {
+    background-color: #99cccc;
+    border: 1px solid #77aaaa;
+    padding: 1px 4px;
+    margin: 0 2px;
+    border-radius: 1px; }
+  #Location .label {
+    font-weight: bold; }
+  #Location .label::after {
+    content: " "; }
+
+#location, .blue-border {
+  border: 2px solid blue; }
+
+#location, .green-border {
+  border: 2px solid green; }

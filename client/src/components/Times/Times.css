@@ -1,0 +1,23 @@
+#Times {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 150px;
+  width: 800px;
+  margin-top: 10px; }
+  #Times .time-wrapper {
+    border: 1px solid darkgray;
+    text-align: center;
+    height: 20px;
+    width: 198px; }
+  #Times .time {
+    text-align: center;
+    font-size: 120%;
+    width: 99px;
+    display: inline-block; }
+  #Times .blue-text {
+    background-color: lightblue;
+    color: darkblue; }
+  #Times .green-text {
+    background-color: lightgreen;
+    color: darkgreen; }

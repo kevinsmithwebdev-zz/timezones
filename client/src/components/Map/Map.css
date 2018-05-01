@@ -1,0 +1,14 @@
+#Map {
+  margin: 0 auto;
+  width: 800px;
+  position: relative; }
+  #Map .tz-map {
+    width: 100%;
+    height: auto; }
+  #Map .pos {
+    font-size: 18px;
+    position: absolute; }
+  #Map .pos-0 {
+    color: blue; }
+  #Map .pos-1 {
+    color: green; }
