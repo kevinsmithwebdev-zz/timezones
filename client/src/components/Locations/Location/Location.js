@@ -26,13 +26,14 @@ class Location extends React.Component {
   }
 
   updateInputValue(e) {
-    console.log(e.target)
     if (e.target === 'Enter') {
       e.preventDefault()
       e.stopPropagation()
       this.handleSubmit()
     }
     this.setState({ newLocStr:  e.target.value })
+    if (e.target.value.length === 3)
+      console.log('length...')
   }
 
   handleKeyDown(e) {
@@ -58,7 +59,6 @@ class Location extends React.Component {
 
     const lDate = new Date(this.props.zDate + offset)
 
-    const hour = lDate.getHours()
     const timeStr = (h, m, s) => `${(h+11)%12+1}:${leadZ(m)}:${leadZ(s)} ${((h+24)%24)/12<1?'am':'pm'}`
 
     let curTimeStr =  DAYS[lDate.getUTCDay()] + ' ' +
