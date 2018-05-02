@@ -69,6 +69,28 @@ router.get("/location/:loc", (req, res) => {
 
 //*************
 
+router.get("/autocomplete/:str", (req, res) => {
+  let str = req.params.str.trim()
+  console.log('GET api/autocomplete')
+  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${str}&types=(cities)&language=pt_BR&key=${process.env.G_KEY}`
+  console.log('url', url)
+  // const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=${process.env.G_KEY}`
+
+  fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    console.log('data', data)
+    console.log('data len', data.predictions.length)
+    res.json({ data })
+  }).catch(error => {
+    console.log(err)
+    res.json({ err })
+  })
+
+})
+
+//*************
+
 router.get("/ping", (req, res) => {
   res.json({ data: "pong" })
 })
