@@ -4,6 +4,8 @@ import Locations  from './Locations/Locations'
 import Map        from './Map/Map'
 import Times      from './Times/Times'
 
+import Auto      from './Auto/Auto'
+
 import Header   from './Header/Header'
 import Footer   from './Footer/Footer'
 
@@ -18,6 +20,8 @@ const App = () => (
     <Map />
     <Locations />
     <Times />
+
+    <Auto />
 
     <Footer />
 
