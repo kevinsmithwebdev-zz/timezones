@@ -2,7 +2,8 @@
   width: 40%;
   min-width: 350px;
   border-radius: 3px;
-  padding: 5px; }
+  padding: 5px;
+  position: relative; }
   #Location .submitBtn {
     background-color: #99cccc;
     border: 1px solid #77aaaa;
@@ -27,7 +28,7 @@
   width: auto;
   height: auto;
   position: absolute;
-  bottom: 0; }
+  bottom: -105px; }
 
 #Location #suggest-list li {
   border: .25px solid black;
