@@ -19,3 +19,27 @@
 
 #location, .green-border {
   border: 2px solid green; }
+
+#Location #suggest-list {
+  list-style-type: none;
+  padding-left: 0;
+  border: .25px solid black;
+  width: auto;
+  height: auto;
+  position: absolute;
+  bottom: 0; }
+
+#Location #suggest-list li {
+  border: .25px solid black;
+  padding-left: 1px;
+  width: auto;
+  color: #555; }
+
+#Location #suggest-list li:hover {
+  color: black; }
+
+#Location .liUnselected {
+  background-color: #eee; }
+
+#Location .liSelected {
+  background-color: #ccc; }

@@ -51,6 +51,7 @@ router.get("/location/:loc", (req, res) => {
         lon: json.results[0].geometry.location.lng,
       }
     }
+    console.log('newLoc', newLoc)
     return newLoc
   })
   .then(newLoc => fetch(`https://maps.googleapis.com/maps/api/timezone/json?location=${newLoc.lat},${newLoc.lon}&timestamp=${dt}&key=${process.env.G_KEY}`))
@@ -60,7 +61,8 @@ router.get("/location/:loc", (req, res) => {
     newLoc.rawOffset = json.rawOffset/3600
     newLoc.timeZoneId = json.timeZoneId
     newLoc.timeZoneName = json.timeZoneName
-    return res.json(newLoc)
+    console.log('newLoc2', newLoc)
+    return res.status(200).json(newLoc)
   })
   .catch(error => {
     console.log(error)
@@ -71,16 +73,11 @@ router.get("/location/:loc", (req, res) => {
 
 router.get("/autocomplete/:str", (req, res) => {
   let str = req.params.str.trim()
-  console.log('GET api/autocomplete')
-  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${str}&types=(cities)&language=pt_BR&key=${process.env.G_KEY}`
-  console.log('url', url)
-  // const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=${process.env.G_KEY}`
+  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${str}&types=(cities)&language=eng&key=${process.env.G_KEY}`
 
   fetch(url)
   .then(response => response.json())
   .then(data => {
-    console.log('data', data)
-    console.log('data len', data.predictions.length)
     res.json({ data })
   }).catch(error => {
     console.log(err)

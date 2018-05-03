@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import * as locationsActions from '../../../redux/actions'
+import * as actions from '../../../redux/actions'
 
 import React from 'react'
 
@@ -12,7 +12,8 @@ class Location extends React.Component {
     super(props)
 
     this.state = {
-      newLocStr: ''
+      newLocStr: '',
+      suggestNum: -1
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -20,29 +21,46 @@ class Location extends React.Component {
     this.updateInputValue = this.updateInputValue.bind(this)
   }
 
-  handleSubmit() {
-    this.setState({ newLocStr: '' })
-    this.props.checkLocation(this.props.locSlot, this.state.newLocStr)
+  handleSubmit(str) {
+    this.props.checkLocation(this.props.locSlot, str)
+    this.setState({ newLocStr: '', suggestNum: -1 })
   }
 
   updateInputValue(e) {
     if (e.target === 'Enter') {
-      e.preventDefault()
-      e.stopPropagation()
-      this.handleSubmit()
+      this.handleSubmit(this.state.newLocStr)
     }
     this.setState({ newLocStr:  e.target.value })
-    if (e.target.value.length === 3)
-      console.log('length...')
+    if (e.target.value.length >= 3) {
+      this.props.getSuggest(this.props.locSlot, this.state.newLocStr)
+    }
   }
 
   handleKeyDown(e) {
-   if (e.key === 'Enter') {
-     e.preventDefault();
-     e.stopPropagation();
-     this.handleSubmit();
-   }
- }
+    switch (e.key) {
+      case 'Enter':
+        e.stopPropagation();
+        e.preventDefault();
+        this.handleSubmit(this.state.newLocStr)
+        break
+      case 'ArrowUp':
+        if (this.state.suggestNum > 0)
+          this.setState({
+            newLocStr: this.props.suggest[this.state.suggestNum-1],
+            suggestNum: this.state.suggestNum-1
+          })
+        break
+      case 'ArrowDown':
+        if (this.state.suggestNum < this.props.suggest.length - 1)
+        this.setState({
+          newLocStr: this.props.suggest[this.state.suggestNum+1],
+          suggestNum: this.state.suggestNum+1
+        })
+        break
+      default:
+        break
+    }
+  }
 
   render() {
     const DAYS = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
@@ -66,6 +84,28 @@ class Location extends React.Component {
                       MONTHS[lDate.getUTCMonth()] + '-' +
                       lDate.getUTCFullYear() + ' ' +
                       timeStr(lDate.getUTCHours(), lDate.getUTCMinutes(), lDate.getUTCSeconds())
+
+    const renderSuggest = this.props.suggest.map((s, idx) => {
+      if (this.props.suggest[idx]) {
+        let liClass = 'liUnselected'
+        if (idx === this.state.suggestNum)
+          liClass = 'liSelected'
+
+        return (
+          <li
+            key={idx}
+            className={liClass}
+            onClick={() => this.setState({ newLocStr: this.props.suggest[idx] })}
+            onDoubleClick={() => this.handleSubmit(this.props.suggest[idx])}
+          >
+            {s}
+          </li>
+        )
+      } else {
+        return null
+      }
+    })
+
 
     return (
       <div id="Location" className={`${color}-border`}>
@@ -91,24 +131,33 @@ class Location extends React.Component {
         <span>{location.dstOffset?'yes':'no'}</span>
         <form>
           Enter new location:<br />
-          <input type="text" name="location"
+          <input
+            type="text"
+            autoComplete="off"
+            name="location"
             value={this.state.newLocStr}
             onChange={this.updateInputValue}
             onKeyDown={this.handleKeyDown}
           />
-          <span className="submitBtn" onClick={this.handleSubmit}>+</span>
+          <ul id="suggest-list">
+            { renderSuggest }
+          </ul>
+          <span className="submitBtn" onClick={() => this.handleSubmit(this.state.newLocStr)}>+</span>
         </form>
       </div>
     )
   }
 }
 
-function mapStateToProps(state) {
-  return { locations: state.locations }
+function mapStateToProps(state, ownProps) {
+  return {
+    locations: state.locations,
+    suggest: state.suggest[ownProps.locSlot]
+  }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ ...locationsActions }, dispatch)
+  return bindActionCreators({ ...actions }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Location)
