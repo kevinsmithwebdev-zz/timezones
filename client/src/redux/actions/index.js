@@ -7,9 +7,17 @@ export const setLocation = (locSlot, locObj) => {
   }
 }
 
+export const clearLocation = (locSlot) => {
+  return {
+    type: 'CLEAR_LOCATION',
+    payload: { locSlot }
+  }
+}
+
 export function checkLocation(locSlot, str) {
   const url = API_LOCATION + str
   return (dispatch) => {
+    dispatch(clearLocation(locSlot))
 
     fetch(url, { method: 'GET' }
     )

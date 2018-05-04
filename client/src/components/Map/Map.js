@@ -23,11 +23,22 @@ class Map extends React.Component {
     const xStyle0 = createXStyle(this.props.locations[0].lat, this.props.locations[0].lon)
     const xStyle1 = createXStyle(this.props.locations[1].lat, this.props.locations[1].lon)
 
+    const isLoadedZ0 = this.props.locations[0].lat
+    const isLoadedZ1 = this.props.locations[1].lat
     return (
       <div id="Map">
         <img className="tz-map" src={mapImg} alt="time zone map" />
-        <span className="pos pos-0" style={xStyle0}>◉</span>
-        <span className="pos pos-1" style={xStyle1}>◉</span>
+
+        { (isLoadedZ0)
+          ? <span className="pos pos-0" style={xStyle0}>◉</span>
+          : null
+        }
+        
+        { (isLoadedZ1)
+          ? <span className="pos pos-1" style={xStyle1}>◉</span>
+          : null
+        }
+
       </div>
     )
   }

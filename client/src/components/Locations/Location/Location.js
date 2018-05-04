@@ -1,11 +1,18 @@
+import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import * as actions from '../../../redux/actions'
 
-import React from 'react'
+import Spinner from '../../Spinner/Spinner'
 
 import './Location.css'
+
+const defaultLocs = [
+  'Oakland, CA USA',
+  'Barcelona, Spain'
+]
+
 
 const MIN_SUG_LEN = 3
 
@@ -67,6 +74,10 @@ class Location extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.handleSubmit(defaultLocs[this.props.locSlot])
+  }
+
   render() {
     const DAYS = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
     const MONTHS = [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
@@ -110,30 +121,64 @@ class Location extends React.Component {
         return null
       }
     })
-
+    let isLoaded = !!location.locStr
 
     return (
       <div id="Location" className={`${color}-border`}>
         <span className="label">Location:</span>
-        <span>{location.locStr}</span>
+        { (isLoaded)
+          ? <span>{location.locStr}</span>
+          : <Spinner />
+        }
+
         <br />
+
         <span className="label">Current Time:</span>
-        <span>{curTimeStr}</span>
+        { (isLoaded)
+          ? <span>{curTimeStr}</span>
+          : <Spinner />
+        }
+
         <br />
+
         <span className="label">Coords:</span>
-        <span>{`${pretty(location.lat)}, ${pretty(location.lon)}`}</span>
+        { (isLoaded)
+          ? <span>{`${pretty(location.lat)}, ${pretty(location.lon)}`}</span>
+          : <Spinner />
+        }
+
         <br />
+
         <span className="label">TZ Name:</span>
-        <span>{location.timeZoneName}</span>
+        { (isLoaded)
+          ? <span>{location.timeZoneName}</span>
+          : <Spinner />
+        }
+
         <br />
+
         <span className="label">TZ ID:</span>
-        <span>{location.timeZoneId}</span>
+        { (isLoaded)
+          ? <span>{location.timeZoneId}</span>
+          : <Spinner />
+        }
+
         <br />
+
         <span className="label">GMT Offset:</span>
-        <span>{location.rawOffset}</span>
+        { (isLoaded)
+          ? <span>{location.rawOffset}</span>
+          : <Spinner />
+        }
+
         <br />
+
         <span className="label">In DST:</span>
-        <span>{location.dstOffset?'yes':'no'}</span>
+        { (isLoaded)
+          ? <span>{location.dstOffset?'yes':'no'}</span>
+          : <Spinner />
+        }
+
         <form>
           Enter new location:<br />
           <input

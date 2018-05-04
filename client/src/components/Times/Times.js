@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 import './Times.css'
 
+import Spinner from '../Spinner/Spinner'
+
 const Map = ({ locations }) => {
 
   const DAYS = [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT' ]
@@ -36,8 +38,9 @@ const Map = ({ locations }) => {
   tz2Day = normalizeDay(tz2Day)
   tz1Hour = normalizeHour(tz1Hour)
   tz2Hour = normalizeHour(tz2Hour)
-
-
+  // console.log(locations)
+  let isLoadedZ0 = locations[0].lat
+  let isLoadedZ1 = locations[1].lat
 
   for (let i=0; i<24; i++) {
     if (tz1Hour===24)
@@ -53,21 +56,26 @@ const Map = ({ locations }) => {
     renderedTimesArr.push(
       <div key={i} className="time-wrapper">
         <span className="blue-text time">
-          {DAYS[tz1Day]} {timeStr(tz1Hour)}
+          { (isLoadedZ0)
+            ? `${DAYS[tz1Day]} ${timeStr(tz1Hour)}`
+            : <Spinner />
+          }
         </span>
         <span className="green-text time">
-          {DAYS[tz2Day]} {timeStr(tz2Hour)}
+          { (isLoadedZ1)
+            ? `${DAYS[tz2Day]} ${timeStr(tz2Hour)}`
+            : <Spinner />
+          }
         </span>
       </div>
     )
     tz1Hour++
     tz2Hour++
-
   }
 
   return (
     <div id="Times">
-      {renderedTimesArr}
+      { renderedTimesArr }
     </div>
   )
 }

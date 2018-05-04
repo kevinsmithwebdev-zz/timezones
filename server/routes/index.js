@@ -1,5 +1,4 @@
 const routeNames = [
-  'data',
   'api'
 ]
 
