@@ -44,10 +44,16 @@ export const setSuggest = (locSlot, suggestions) => {
   }
 }
 
+export const clearSuggest = (locSlot) => {
+  return {
+    type: 'CLEAR_SUGGEST',
+    payload: { locSlot}
+  }
+}
+
 export function getSuggest(locSlot, str) {
   const url = API_SUGGEST + str
 
-  console.log(url)
   return (dispatch) => {
     fetch(url, { method: 'GET' }
     )
@@ -59,7 +65,7 @@ export function getSuggest(locSlot, str) {
     })
     .then((json) => {
       let pred = json.data.predictions.map(l => l.description)
-      if (pred) 
+      if (pred)
         dispatch(setSuggest(locSlot, pred))
     })
     .catch(error => console.error(error))

@@ -7,7 +7,7 @@ import React from 'react'
 
 import './Location.css'
 
-const minSugLen = 3
+const MIN_SUG_LEN = 3
 
 class Location extends React.Component {
   constructor(props) {
@@ -32,9 +32,12 @@ class Location extends React.Component {
     if (e.target === 'Enter') {
       this.handleSubmit(this.state.newLocStr)
     }
+
     this.setState({ newLocStr:  e.target.value })
-    if (e.target.value.length >= minSugLen) {
+    if (e.target.value.length >= MIN_SUG_LEN) {
       this.props.getSuggest(this.props.locSlot, this.state.newLocStr)
+    } else {
+      this.props.clearSuggest(this.props.locSlot)
     }
   }
 
@@ -88,7 +91,7 @@ class Location extends React.Component {
                       timeStr(lDate.getUTCHours(), lDate.getUTCMinutes(), lDate.getUTCSeconds())
 
     const renderSuggest = this.props.suggest.map((s, idx) => {
-      if (this.props.suggest[idx] && this.state.newLocStr.length >= minSugLen) {
+      if (this.props.suggest[idx] && this.state.newLocStr.length >= MIN_SUG_LEN) {
         let liClass = 'liUnselected'
         if (idx === this.state.suggestNum)
           liClass = 'liSelected'

@@ -13,6 +13,7 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
   },
+  "homepage": "http://www.kevinsmithwebdev.com/apps/timezones",
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",

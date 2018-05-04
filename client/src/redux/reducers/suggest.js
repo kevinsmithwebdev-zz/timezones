@@ -9,6 +9,10 @@ const suggestReducer = (state = suggestInit, action) => {
 			newState = [...state]
 			newState[action.payload.locSlot] = action.payload.suggestions
 			return newState
+		case 'CLEAR_SUGGEST':
+			newState = [...state]
+			newState[action.payload.locSlot] = []
+			return newState
 		case 'SET_LOCATION':
 			newState = [...state]
 			newState[action.payload.locSlot] = []

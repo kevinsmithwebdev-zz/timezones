@@ -7,7 +7,7 @@
     "verbose": true
   },
   "scripts": {
-    "start": "nodemon server",
+    "start": "node server",
     "jest": "jest"
   },
   "keywords": [],
