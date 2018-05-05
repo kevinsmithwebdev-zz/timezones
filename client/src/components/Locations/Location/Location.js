@@ -28,24 +28,27 @@ class Location extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.updateInputValue = this.updateInputValue.bind(this)
+    this.handleFindMe = this.handleFindMe.bind(this)
   }
 
   handleSubmit(str) {
-    this.props.checkLocation(this.props.locSlot, str)
-    this.setState({ newLocStr: '', suggestNum: -1 })
+    if (str.length>=MIN_SUG_LEN) {
+      this.props.checkLocation(this.props.locSlot, str)
+      this.setState({ newLocStr: '', suggestNum: -1 })
+    }
+  }
+  handleFindMe() {
+    this.props.findMeLocation(this.props.locSlot)
   }
 
   updateInputValue(e) {
-    if (e.target === 'Enter') {
+    if (e.target === 'Enter')
       this.handleSubmit(this.state.newLocStr)
-    }
-
     this.setState({ newLocStr:  e.target.value })
-    if (e.target.value.length >= MIN_SUG_LEN) {
+    if (e.target.value.length >= MIN_SUG_LEN)
       this.props.getSuggest(this.props.locSlot, this.state.newLocStr)
-    } else {
+    else
       this.props.clearSuggest(this.props.locSlot)
-    }
   }
 
   handleKeyDown(e) {
@@ -125,63 +128,70 @@ class Location extends React.Component {
 
     return (
       <div id="Location" className={`${color}-border`}>
-        <span className="label">Location:</span>
-        { (isLoaded)
-          ? <span>{location.locStr}</span>
-          : <Spinner />
-        }
 
-        <br />
+        <div className="data-box location">
+          <span className="findMeBtn" role="img" aria-label="find me" onClick={this.handleFindMe}>📌</span>
+          <span className="label">
+            Location:
+          </span>
+          {   (isLoaded)
+            ?   <span className="data">{location.locStr}</span>
+            :   <Spinner />
+          }
+        </div>
 
-        <span className="label">Current Time:</span>
-        { (isLoaded)
-          ? <span>{curTimeStr}</span>
-          : <Spinner />
-        }
+        <div className="data-box">
+          <span className="label">Current Time:</span>
+          { (isLoaded)
+            ? <span className="data">{curTimeStr}</span>
+            : <Spinner />
+          }
+        </div>
 
-        <br />
+        <div className="data-box">
+          <span className="label">Coords:</span>
+          { (isLoaded)
+            ? <span className="data">{`${pretty(location.lat)}, ${pretty(location.lon)}`}</span>
+            : <Spinner />
+          }
+        </div>
 
-        <span className="label">Coords:</span>
-        { (isLoaded)
-          ? <span>{`${pretty(location.lat)}, ${pretty(location.lon)}`}</span>
-          : <Spinner />
-        }
+        <div className="data-box">
+          <span className="label">TZ Name:</span>
+          { (isLoaded)
+            ? <span className="data">{location.timeZoneName}</span>
+            : <Spinner />
+          }
+        </div>
 
-        <br />
+        <div className="data-box">
+          <span className="label">TZ ID:</span>
+          { (isLoaded)
+            ? <span className="data">{location.timeZoneId}</span>
+            : <Spinner />
+          }
+        </div>
 
-        <span className="label">TZ Name:</span>
-        { (isLoaded)
-          ? <span>{location.timeZoneName}</span>
-          : <Spinner />
-        }
+        <div className="data-box">
+          <span className="label">GMT Offset:</span>
+          { (isLoaded)
+            ? <span className="data">{location.rawOffset}</span>
+            : <Spinner />
+          }
+        </div>
 
-        <br />
-
-        <span className="label">TZ ID:</span>
-        { (isLoaded)
-          ? <span>{location.timeZoneId}</span>
-          : <Spinner />
-        }
-
-        <br />
-
-        <span className="label">GMT Offset:</span>
-        { (isLoaded)
-          ? <span>{location.rawOffset}</span>
-          : <Spinner />
-        }
-
-        <br />
-
-        <span className="label">In DST:</span>
-        { (isLoaded)
-          ? <span>{location.dstOffset?'yes':'no'}</span>
-          : <Spinner />
-        }
-
+        <div className="data-box">
+          <span className="label">In DST:</span>
+          { (isLoaded)
+            ? <span className="data">{location.dstOffset?'yes':'no'}</span>
+            : <Spinner />
+          }
+        </div>
+        <hr />
         <form>
           Enter new location:<br />
           <input
+            className="inputField"
             type="text"
             autoComplete="off"
             name="location"
@@ -189,7 +199,7 @@ class Location extends React.Component {
             onChange={this.updateInputValue}
             onKeyDown={this.handleKeyDown}
           />
-          <ul id="suggest-list">
+          <ul className="suggest-list">
             { renderSuggest }
           </ul>
           <span className="submitBtn" onClick={() => this.handleSubmit(this.state.newLocStr)}>+</span>

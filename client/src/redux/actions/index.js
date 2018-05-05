@@ -19,8 +19,7 @@ export function checkLocation(locSlot, str) {
   return (dispatch) => {
     dispatch(clearLocation(locSlot))
 
-    fetch(url, { method: 'GET' }
-    )
+    fetch(url, { method: 'GET' })
     .then((response) => {
       if (response.status === 200) {
         return response.json()
@@ -32,6 +31,23 @@ export function checkLocation(locSlot, str) {
         dispatch(setLocation(locSlot, json))
     })
     .catch(error => console.error(error))
+  }
+}
+
+export function findMeLocation(locSlot) {
+  return (dispatch) => {
+    dispatch(clearLocation(locSlot))
+    fetch('http://ip-api.com/json', { method: 'GET' })
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json()
+      }
+      return null
+    })
+    .then((position) => {
+      let posStr = `${position.lat},${position.lon}`
+      dispatch(checkLocation(locSlot, posStr))
+    })
   }
 }
 

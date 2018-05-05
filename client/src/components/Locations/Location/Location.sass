@@ -6,6 +6,7 @@
   border-radius: 3px
   padding: 5px
   position: relative
+  display: inline
 
   .submitBtn
     background-color: $color-lightblue
@@ -14,36 +15,56 @@
     margin: 0 2px
     border-radius: 1px
 
+  .findMeBtn
+    background-color: #999
+    border: 2px solid (#999 - #222)
+    padding: 1px 4px
+    margin: 0 2px
+    border-radius: 4px
+    font-size: 1.5em
+    float: left
+
+  .data-box
+    padding: 0
+    margin: 0
+    height: 20px
+    display: block
+
   .label
     font-weight: bold
   .label::after
     content: " "
+  .location
+    height: 2.3em
+
+  .suggest-list
+    list-style-type: none
+    padding-left: 0
+    border: .25px solid black
+    width: auto
+    height: auto
+    position: absolute
+    top: 12.72em
+
+  .suggest-list  li
+    border: .25px solid black
+    padding: 1px
+    width: 20em
+    color: #555
+
+  .suggest-list li:hover
+    color: black
+
+  .liUnselected
+    background-color: #eee
+  .liSelected
+    background-color: #ccc
+
+  .inputField
+    width: 24em
 
 #location, .blue-border
   border: 2px solid blue
 
 #location, .green-border
   border: 2px solid green
-
-#Location #suggest-list
-  list-style-type: none
-  padding-left: 0
-  border: .25px solid black
-  width: auto
-  height: auto
-  position: absolute
-  bottom: -105px
-
-#Location #suggest-list  li
-  border: .25px solid black
-  padding-left: 1px
-  width: auto
-  color: #555
-
-#Location #suggest-list li:hover
-  color: black
-
-#Location .liUnselected
-  background-color: #eee
-#Location .liSelected
-  background-color: #ccc

@@ -3,44 +3,57 @@
   min-width: 350px;
   border-radius: 3px;
   padding: 5px;
-  position: relative; }
+  position: relative;
+  display: inline; }
   #Location .submitBtn {
     background-color: #99cccc;
     border: 1px solid #77aaaa;
     padding: 1px 4px;
     margin: 0 2px;
     border-radius: 1px; }
+  #Location .findMeBtn {
+    background-color: #999;
+    border: 2px solid #777777;
+    padding: 1px 4px;
+    margin: 0 2px;
+    border-radius: 4px;
+    font-size: 1.5em;
+    float: left; }
+  #Location .data-box {
+    padding: 0;
+    margin: 0;
+    height: 20px;
+    display: block; }
   #Location .label {
     font-weight: bold; }
   #Location .label::after {
     content: " "; }
+  #Location .location {
+    height: 2.3em; }
+  #Location .suggest-list {
+    list-style-type: none;
+    padding-left: 0;
+    border: .25px solid black;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 12.72em; }
+  #Location .suggest-list li {
+    border: .25px solid black;
+    padding: 1px;
+    width: 20em;
+    color: #555; }
+  #Location .suggest-list li:hover {
+    color: black; }
+  #Location .liUnselected {
+    background-color: #eee; }
+  #Location .liSelected {
+    background-color: #ccc; }
+  #Location .inputField {
+    width: 24em; }
 
 #location, .blue-border {
   border: 2px solid blue; }
 
 #location, .green-border {
   border: 2px solid green; }
-
-#Location #suggest-list {
-  list-style-type: none;
-  padding-left: 0;
-  border: .25px solid black;
-  width: auto;
-  height: auto;
-  position: absolute;
-  bottom: -105px; }
-
-#Location #suggest-list li {
-  border: .25px solid black;
-  padding-left: 1px;
-  width: auto;
-  color: #555; }
-
-#Location #suggest-list li:hover {
-  color: black; }
-
-#Location .liUnselected {
-  background-color: #eee; }
-
-#Location .liSelected {
-  background-color: #ccc; }
